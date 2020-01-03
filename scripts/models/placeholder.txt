@@ -1,0 +1,61 @@
+        function checkWinConditions(){
+
+            if (gameOver){
+                while (dealer.score < currentPlayer.score
+                    && currentPlayer.score <= 21
+                    && dealer.score <= 21
+                    && dealer.cards.length < 5){
+                      let card = deck.giveNextCard();
+                      dealer.takeCards(card);
+                    }
+            }
+        
+            if (currentPlayer.score > 21 || dealer.cards >= 5){
+              currentPlayerWon = false;
+              turnOver = true;
+            }
+            else if (dealer.score > 21){
+              currentPlayerWon = true;
+              turnOver = true;
+            }
+            else if (turnOver){
+              if (currentPlayer.score === dealer.score){
+                tie = true;
+              }
+              else if (currentPlayer.score > dealer.score){
+                currentPlayerWon = true;
+              }
+              else{
+                currentPlayerWon = false;
+              }
+            }
+          
+          }
+        
+          function gameOverConditions(){
+            if (turnOver){
+              if(tie){
+                textArea.innerText = "IT'S A TIE!";
+                playSound("/src/scripts/ogg//nobody-cares.mp3");
+              }
+              else if (currentPlayerWon){
+                textArea.innerText = `${currentPlayer.name} WINS!`;
+                playSound("/src/scripts/ogg//Super Mario Bros Win Stage Sound Effect (152kbit_Opus).ogg");
+              }
+              else{
+                textArea.innerText = "DEALER WINS!";
+                playSound("/src/scripts/ogg//FAIL SOUND EFFECT (128kbit_Opus).ogg");
+              }
+            }
+            if (gameOver){
+                resetBoard();
+                newGameButton.style.display = 'inline';
+                hitButton.style.display = 'none';
+                stayButton.style.display = 'none';
+            }
+            else{
+              newGameButton.style.display = 'none';
+              hitButton.style.display = 'inline';
+              stayButton.style.display = 'inline';
+            }
+          }
