@@ -63,7 +63,9 @@ deal(){
 
 InitializeNewRound(){
       this.resetBoard();
-      
+      if (this.playersArray.length < 1){
+        location.reload();
+      }
       this.playersArray.forEach(p => p.showCardBack());
       this.dealer.showCardBack();
       this.newRoundButton.style.display = 'none';
